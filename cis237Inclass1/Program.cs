@@ -48,8 +48,15 @@ namespace cis237Inclass1
 
             // Create a variable of type UserInterface:
             UserInterface ui = new UserInterface();
+
+            /// NEW - How to call a static class method:
+            StaticUserInterface.GetUserInput();
+
             // Get the user input and assign to variable choice:
-            int choice = ui.GetUserInput();
+            //int choice = ui.GetUserInput();
+            // Can use static class instead:
+            int choice = StaticUserInterface.GetUserInput();
+
             while (choice != 2) // If choice is not 2 (to exit), loop:
             {
                 if (choice == 1)
@@ -106,7 +113,7 @@ namespace cis237Inclass1
                 // If catch is called, return false:
                 return false;
             }
-            finally // NEW - executed regardless of whether catch is called!
+            finally /// NEW - executed regardless of whether catch is called!
             {
                 if (streamReader != null)
                 {   // Close the streamReader object:
