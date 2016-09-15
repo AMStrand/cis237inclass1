@@ -1,4 +1,4 @@
-﻿// Class to hold Employee information: FirstName, LastName, and WeeklySalary.
+﻿// The class to hold Employee information: FirstName, LastName, and WeeklySalary.
 
 using System;
 using System.Collections.Generic;
@@ -35,12 +35,12 @@ namespace cis237Inclass1
         // Methods:
         public override string ToString()   
         // Overrides the implicit ToString to assign a particular set of values to the class name:
-        {
+        {   // "this" is a reference to this class level - used to distinguish between other same-named variables.
             return this._firstName + " " + this.LastName;
         }
 
         public decimal YearlySalary()
-        {
+        {   // Calculates yearly salary from weekly salary.
             return this.WeeklySalary * 52;
         }
 
@@ -55,13 +55,6 @@ namespace cis237Inclass1
             this._firstName = firstName;
             this._lastName = lastName;
             this._weeklySalary = weeklySalary;
-
-
         }
-
-
-
-
-
     }
 }
