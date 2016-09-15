@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+// Import System.IO to use streamreader, etc
+using System.IO;
 
 namespace cis237Inclass1
 {
@@ -41,6 +43,9 @@ namespace cis237Inclass1
                 }
             }
 
+            // Use the CSVProcessor method to load the employee information from the CSV file:
+            ImportCSV("employees.csv", employees);
+
             // Create a variable of type UserInterface:
             UserInterface ui = new UserInterface();
             // Get the user input and assign to variable choice:
@@ -65,7 +70,67 @@ namespace cis237Inclass1
                 // Get user input again:
                 choice = ui.GetUserInput(); 
             }
+        }
+
+        // Method to import the CSV file:
+        static bool ImportCSV(string pathToCsvFile, Employee[] employees)
+        {
+            // Create StreamReader object and set to null:
+            StreamReader streamReader = null;   // Convention to use the same name (as opposed to inputFile, etc).
+
+            // try/catch structure to read the file in:
+            try
+            {
+                // Declare string variable line to store each line:
+                string line;
+                // Instantiate StreamReader object:
+                streamReader = new StreamReader(pathToCsvFile);
+                // Set counter to 0:
+                int counter = 0;
+                // Loop to process the line:
+                while ((line = streamReader.ReadLine()) != null) // Assign and test for != null.
+                {
+                    // Call the process line method and send over the read in line, employees array, and index (incrementing):
+                    processLine(line, employees, counter++);
+                }
+                // If successful, return true:
+                return true;
+            }
+            // If try failed:
+            catch (Exception ex)
+            {
+                // Error message display to user, including exception message and stack call:
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine();
+                Console.WriteLine(ex.StackTrace);   // Shows call order prior to error.
+                // If catch is called, return false:
+                return false;
+            }
+            finally // NEW - executed regardless of whether catch is called!
+            {
+                if (streamReader != null)
+                {   // Close the streamReader object:
+                    streamReader.Close();
+                }
+            }
+        }
+
+        // Method to process the lines in the CSV file:
+        static void processLine(string line, Employee[] employees, int index)
+        {
+            // Declare a string array and split it by commas:
+            string[] parts = line.Split(',');
+            // Read in the parts of parts and assign to variables:
+            string firstName = parts[0];
+            string lastName = parts[1];
+            decimal weeklySalary = decimal.Parse(parts[2]);
+            // Use the variables to instantiate a new Employee and assign it to the spot 
+            // in the employees array of the index passed in.
+            employees[index] = new Employee(firstName, lastName, weeklySalary);
+
+
 
         }
+
     }
 }
